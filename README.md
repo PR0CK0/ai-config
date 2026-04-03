@@ -46,7 +46,14 @@ cd ~/ai-config
 ./build.sh        # generates aliases + wires git hooks
 ```
 
-**2. Claude Code (global):**
+**2. Claude Code:**
+
+Rules only (drop-in):
+```bash
+cp CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+Full setup (agents, hooks, slash commands, statusline):
 ```bash
 cp CLAUDE.md ~/.claude/CLAUDE.md
 cp claude/settings.json ~/.claude/settings.json
