@@ -8,4 +8,4 @@ Paste `user-rules.md` content into Cursor → Settings → Rules for AI.
 mkdir -p .cursor/rules && cp rules/global.mdc .cursor/rules/
 ```
 
-Both files are generated from `AGENTS.md` via `build.sh`.
+Both files are generated from root `AGENTS.md` via `build.sh`. Do not edit them directly.
