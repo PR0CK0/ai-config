@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# pre-push — block push if AGENTS.md was changed without rebuilding aliases.
+# Install: run ./build.sh (sets core.hooksPath automatically).
+set -euo pipefail
+
+AGENTS="AGENTS.md"
+GENERATED=(CLAUDE.md GEMINI.md cursor/user-rules.md)
+
+# Check if AGENTS.md is modified in commits being pushed
+if ! git diff --name-only HEAD @{u} 2>/dev/null | grep -q "^${AGENTS}$" && \
+   ! git diff --cached --name-only | grep -q "^${AGENTS}$"; then
+  exit 0
+fi
+
+# AGENTS.md changed — verify generated files are current
+needs_rebuild=0
+for f in "${GENERATED[@]}"; do
+  if [[ "$AGENTS" -nt "$f" ]]; then
+    needs_rebuild=1
+    break
+  fi
+done
+
+if [[ "$needs_rebuild" -eq 0 ]]; then
+  exit 0
+fi
+
+echo "AGENTS.md changed — rebuilding aliases..."
+bash build.sh
+
+echo ""
+echo "Generated files updated. Stage and commit them before pushing:"
+for f in "${GENERATED[@]}"; do
+  echo "  git add $f"
+done
+echo "  git commit -m 'chore: rebuild aliases from AGENTS.md'"
+echo ""
+exit 1

@@ -33,3 +33,10 @@ generate GEMINI.md
 # Cursor — needs YAML frontmatter; auto-attach to all files
 mkdir -p cursor
 generate cursor/user-rules.md "$(printf 'description: Global rules\nalwaysApply: true\n---\n')"
+
+# Wire up git hooks so pre-push enforces rebuild on AGENTS.md changes
+if git rev-parse --git-dir > /dev/null 2>&1; then
+  git config core.hooksPath .githooks
+  chmod +x .githooks/pre-push
+  echo "hooks:    .githooks wired via core.hooksPath"
+fi
