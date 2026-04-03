@@ -34,8 +34,10 @@ Ontology-grounded LLM development. TDD. Secure by default.
 
 ## Git & Release
 
-- Protected branches (master, main, develop) — never commit or push directly.
-- Feature branches → PRs. Conventional commits: `feat|fix|refactor|chore|docs|test|perf`.
+- Conventional commits: `feat|fix|refactor|chore|docs|test|perf`.
+- On first git operation in a repo, confirm: production/team or personal/prototype?
+- Production/team: feature branches → PRs, never commit to main/master/develop directly.
+- Personal/prototype: commit directly to main — git history is the safety net. Revert if wrong.
 - Release: `feature/*` → `develop` → `release/vX.Y.Z` (bump + CHANGELOG) → `master` → tag → ff `develop`.
 - Never `--no-verify`, `--force`, hook bypass. Fix root causes.
 - Atomic commits: only files you touched. `git status` before every commit.
