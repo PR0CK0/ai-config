@@ -39,9 +39,15 @@ Rules here are **organizational scar tissue** — grown from real incidents, not
 
 ## Install
 
-**Claude Code — global:**
+**1. Clone and build:**
 ```bash
-./build.sh
+git clone https://github.com/PR0CK0/ai-config.git ~/ai-config
+cd ~/ai-config
+./build.sh        # generates aliases + wires git hooks
+```
+
+**2. Claude Code (global):**
+```bash
 cp CLAUDE.md ~/.claude/CLAUDE.md
 cp claude/settings.json ~/.claude/settings.json
 cp -r claude/agents ~/.claude/agents
@@ -50,21 +56,30 @@ cp -r claude/commands ~/.claude/commands
 chmod +x ~/.claude/hooks/statusline.sh
 ```
 
-**Per-project (any tool) — pointer pattern:**
+**3. Cursor:**
+Copy `cursor/user-rules.md` content into Cursor → Settings → Rules for AI.
+
+**4. Gemini CLI:**
 ```bash
-echo "READ ~/path/to/ai-config/AGENTS.md BEFORE ANYTHING" > AGENTS.md
+mkdir -p ~/.gemini && cp GEMINI.md ~/.gemini/GEMINI.md
 ```
 
-**Cursor:**
+**5. Codex CLI:**
 ```bash
-./build.sh
-# copy cursor/user-rules.md content into Cursor Settings → Rules for AI
+cp AGENTS.md ~/AGENTS.md   # global, or copy to project root
 ```
 
-**Symlinks (keeps generated files always current):**
+**Per-project pointer (any tool):**
+```bash
+echo "READ ~/ai-config/AGENTS.md BEFORE ANYTHING" > AGENTS.md
+```
+
+**Symlinks instead of copies:**
 ```bash
 ./build.sh --symlink
 ```
+
+> `build.sh` wires `.githooks/pre-push` automatically. If `AGENTS.md` changes, the hook rebuilds aliases and blocks the push until generated files are committed.
 
 ---
 
