@@ -17,7 +17,7 @@ One file. One source. No drift.
 Rules here are **organizational scar tissue** — grown from real incidents, not upfront design. A rule gets added the second a mistake repeats. Nothing is added speculatively.
 
 - **One source.** Edit `AGENTS.md` only. `build.sh` generates all tool-specific aliases.
-- **Minimal surface.** Short rules shape judgment. Long rules get ignored.
+- **Minimal surface.** Short rules shape judgment. Long rules get ignored — and the middle ones get ignored most. Research shows LLMs reliably attend to the beginning and end of long contexts, with significant degradation in between ([Liu et al., 2023 — "Lost in the Middle"](https://arxiv.org/abs/2307.03172)). Keep `AGENTS.md` short and front-load what matters.
 - **Ontology-grounded.** Models, schemas, and knowledge graphs are first-class.
 - **TDD.** Every function ships with a test. Red → green → refactor, always.
 - **Secure.** No hardcoded paths, tokens, or secrets. Ever.
