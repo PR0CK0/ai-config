@@ -20,6 +20,7 @@ Rules are organizational scar tissue — added the second a mistake repeats. Kee
 - Touch only what the request requires. Match existing style.
 - If you wrote 200 lines and it could be 50, rewrite it.
 - Check for existing constants before creating literals. Name anything used more than once.
+- Before adding a dependency, health-check it: recent releases, active maintenance, community adoption. Flag anything unmaintained or poorly adopted.
 
 ## TDD
 
@@ -38,9 +39,11 @@ Rules are organizational scar tissue — added the second a mistake repeats. Kee
 
 - Protected branches (master, main, develop) — never commit or push directly.
 - Feature branches → PRs. Conventional commits: `feat|fix|refactor|chore|docs|test|perf`.
-- Release flow: `feature/*` → `develop` → `release/vX.Y.Z` (bump version + CHANGELOG) → `master` → tag `vX.Y.Z` → back-merge to `develop`.
+- Release flow: `feature/*` → `develop` → `release/vX.Y.Z` (bump version + CHANGELOG) → `master` → tag `vX.Y.Z` → fast-forward `develop`.
 - Never `--no-verify`, `--force`, or bypass hooks. Fix root causes.
 - Atomic commits: only the files you touched. Check `git status` before every commit.
+- Commit frequently on logical chunks with meaningful messages. Never push without explicit permission.
+- If the repo has GitHub Actions, monitor CI after every push: `gh run list/view`, rerun on flakes, fix root cause on failures. Never leave CI red.
 - No destructive ops (`reset --hard`, `clean`, `restore`) without explicit written approval in the current conversation.
 
 ## Cleanup
@@ -59,3 +62,4 @@ Rules are organizational scar tissue — added the second a mistake repeats. Kee
 - Fix code, not config. No suppression comments. Ask before touching tooling.
 - Update docs in the same commit when changing source.
 - Ask clarifying questions one at a time. Produce a plan before implementing non-trivial features.
+- If you encounter unrecognized changes, assume another agent made them. Focus on your own scope. If they conflict with your work, stop and ask.
