@@ -1,0 +1,51 @@
+{
+  "model": "sonnet",
+  "showTurnDuration": true,
+  "terminalProgressBarEnabled": true,
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "Before this session is compacted, write or update SESSION.md in the current working directory. Review the conversation history and produce a structured summary with these sections: Status (one sentence on current state), Completed (what was finished), Decisions (key decisions made and why, non-obvious from code), In Progress (what was being worked on), Next (ordered list of what to do next), Context (anything needed that isn't obvious from reading the code). Keep it under 50 lines. If SESSION.md already exists, update it rather than replacing it wholesale. Use the format defined in ~/.claude/commands/-session.md.",
+            "timeout": 60,
+            "statusMessage": "Saving session context..."
+          },
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/pre-compact.js",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/post-compact.js",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/prompt-inject.js",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {},
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/hooks/statusline.sh"
+  }
+}
