@@ -19,7 +19,7 @@ Rules are organizational scar tissue — added the second a mistake repeats. Kee
 - No features beyond what was asked. No flexibility that wasn't requested.
 - Touch only what the request requires. Match existing style.
 - If you wrote 200 lines and it could be 50, rewrite it.
-- Before creating a numeric or string literal, grep for existing constants. Use them. Name anything used more than once.
+- Check for existing constants before creating literals. Name anything used more than once.
 
 ## TDD
 
@@ -53,8 +53,6 @@ Rules are organizational scar tissue — added the second a mistake repeats. Kee
 
 - Prefer tables and diagrams over prose for architecture, tradeoffs, and comparisons.
 - Use Mermaid for diagrams. One table beats three paragraphs.
-- Offer one contextual next action, not a menu of everything possible.
-
 ## Ownership
 
 - If you encounter a problem, fix it. No "pre-existing issue", no "outside scope."
