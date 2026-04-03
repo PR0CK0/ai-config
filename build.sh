@@ -16,7 +16,7 @@ generate() {
   local dst="$1"
   local prefix="${2:-}"
   if [[ "$SYMLINK" == "--symlink" && -z "$prefix" ]]; then
-    ln -sf "$SRC" "$dst"
+    ln -sf "$(realpath "$SRC")" "$dst"
     echo "symlinked: $dst → $SRC"
   else
     { [[ -n "$prefix" ]] && printf '%s' "$prefix"; cat "$SRC"; } > "$dst"
@@ -24,17 +24,32 @@ generate() {
   fi
 }
 
-# Claude Code — reads CLAUDE.md from project root or ~/.claude/CLAUDE.md
-generate CLAUDE.md
+# ── Claude Code ───────────────────────────────────────────────────────────────
+# Drop claude/CLAUDE.md into ~/.claude/CLAUDE.md
+# Full install: settings.json, agents/, hooks/, commands/ also go to ~/.claude/
+mkdir -p claude
+generate claude/CLAUDE.md
 
-# Gemini CLI — reads GEMINI.md from project root or ~/.gemini/GEMINI.md
-generate GEMINI.md
+# ── Gemini CLI ────────────────────────────────────────────────────────────────
+# Drop gemini/GEMINI.md into ~/.gemini/GEMINI.md
+mkdir -p gemini
+generate gemini/GEMINI.md
 
-# Cursor — needs YAML frontmatter; auto-attach to all files
-mkdir -p cursor
-generate cursor/user-rules.md "$(printf 'description: Global rules\nalwaysApply: true\n---\n')"
+# ── Codex CLI ────────────────────────────────────────────────────────────────
+# Drop codex/AGENTS.md into ~/AGENTS.md (global) or project root (per-project)
+mkdir -p codex
+generate codex/AGENTS.md
 
-# Wire up git hooks so pre-push enforces rebuild on AGENTS.md changes
+# ── Cursor ───────────────────────────────────────────────────────────────────
+# user-rules.md → paste into Cursor Settings → Rules for AI (global)
+# rules/global.mdc → drop into .cursor/rules/ in any project (per-project)
+mkdir -p cursor/rules
+CURSOR_FRONT="$(printf 'description: Global rules\nalwaysApply: true\n---\n')"
+generate cursor/user-rules.md "$CURSOR_FRONT"
+generate cursor/rules/global.mdc "$CURSOR_FRONT"
+
+# ── Git hooks ────────────────────────────────────────────────────────────────
+# Wire pre-push hook to enforce rebuild when AGENTS.md changes
 if git rev-parse --git-dir > /dev/null 2>&1; then
   git config core.hooksPath .githooks
   chmod +x .githooks/pre-push

@@ -4,18 +4,18 @@
 set -euo pipefail
 
 AGENTS="AGENTS.md"
-GENERATED=(CLAUDE.md GEMINI.md cursor/user-rules.md)
+GENERATED=(claude/CLAUDE.md gemini/GEMINI.md codex/AGENTS.md cursor/user-rules.md cursor/rules/global.mdc)
 
-# Check if AGENTS.md is modified in commits being pushed
-if ! git diff --name-only HEAD @{u} 2>/dev/null | grep -q "^${AGENTS}$" && \
-   ! git diff --cached --name-only | grep -q "^${AGENTS}$"; then
+# Only run if AGENTS.md is among the changed files being pushed
+changed=$(git diff --name-only HEAD @{u} 2>/dev/null || git diff --name-only HEAD 2>/dev/null)
+if ! echo "$changed" | grep -q "^${AGENTS}$"; then
   exit 0
 fi
 
-# AGENTS.md changed — verify generated files are current
+# Check if any generated file is older than AGENTS.md
 needs_rebuild=0
 for f in "${GENERATED[@]}"; do
-  if [[ "$AGENTS" -nt "$f" ]]; then
+  if [[ ! -f "$f" ]] || [[ "$AGENTS" -nt "$f" ]]; then
     needs_rebuild=1
     break
   fi

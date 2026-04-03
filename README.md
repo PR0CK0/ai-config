@@ -26,14 +26,27 @@ Rules here are **organizational scar tissue** — grown from real incidents, not
 
 ## Structure
 
-| Path | Purpose |
-|------|---------|
-| `AGENTS.md` | Canonical rules — **edit this only** |
-| `build.sh` | Generates `CLAUDE.md`, `GEMINI.md`, `cursor/user-rules.md` |
-| `claude/settings.json` | Model, hooks, status line config |
-| `claude/agents/` | Eight specialist sub-agents |
-| `claude/hooks/` | Session management, context injection, status line |
-| `claude/commands/` | Slash commands: `/-check`, `/-ship`, `/-review`, `/-discover`, `/-session`, `/-sync` |
+```
+ai-config/
+├── AGENTS.md              ← single source of truth — edit this only
+├── build.sh               ← generates all tool folders + wires git hooks
+├── claude/
+│   ├── CLAUDE.md          ← generated
+│   ├── settings.json      ← model, hooks, statusline config
+│   ├── agents/            ← 8 specialist sub-agents
+│   ├── hooks/             ← session management, context injection, statusline
+│   └── commands/          ← /-check, /-ship, /-review, /-discover, /-session, /-sync
+├── cursor/
+│   ├── user-rules.md      ← generated — paste into Settings → Rules for AI
+│   └── rules/
+│       └── global.mdc     ← generated — drop into .cursor/rules/ per project
+├── gemini/
+│   └── GEMINI.md          ← generated
+└── codex/
+    └── AGENTS.md          ← generated
+```
+
+Each tool folder is built exhaustively. You only need the generated config file for your tool — the rest (agents, hooks, commands) is Claude Code-specific.
 
 ---
 
@@ -43,37 +56,41 @@ Rules here are **organizational scar tissue** — grown from real incidents, not
 ```bash
 git clone https://github.com/PR0CK0/ai-config.git ~/ai-config
 cd ~/ai-config
-./build.sh        # generates aliases + wires git hooks
+./build.sh        # generates all tool folders + wires pre-push hook
 ```
 
-**2. Claude Code:**
-
-Rules only (drop-in):
+**2. Claude Code — rules only (drop-in):**
 ```bash
-cp CLAUDE.md ~/.claude/CLAUDE.md
+cp ~/ai-config/claude/CLAUDE.md ~/.claude/CLAUDE.md
 ```
 
-Full setup (agents, hooks, slash commands, statusline):
+**Claude Code — full setup (agents, hooks, slash commands, statusline):**
 ```bash
-cp CLAUDE.md ~/.claude/CLAUDE.md
-cp claude/settings.json ~/.claude/settings.json
-cp -r claude/agents ~/.claude/agents
-cp -r claude/hooks ~/.claude/hooks
-cp -r claude/commands ~/.claude/commands
+cp ~/ai-config/claude/CLAUDE.md ~/.claude/CLAUDE.md
+cp ~/ai-config/claude/settings.json ~/.claude/settings.json
+cp -r ~/ai-config/claude/agents ~/.claude/agents
+cp -r ~/ai-config/claude/hooks ~/.claude/hooks
+cp -r ~/ai-config/claude/commands ~/.claude/commands
 chmod +x ~/.claude/hooks/statusline.sh
 ```
 
-**3. Cursor:**
-Copy `cursor/user-rules.md` content into Cursor → Settings → Rules for AI.
+**3. Cursor — global rules:**
+Paste `cursor/user-rules.md` content into Cursor → Settings → Rules for AI.
+
+**Cursor — per-project:**
+```bash
+mkdir -p .cursor/rules && cp ~/ai-config/cursor/rules/global.mdc .cursor/rules/
+```
 
 **4. Gemini CLI:**
 ```bash
-mkdir -p ~/.gemini && cp GEMINI.md ~/.gemini/GEMINI.md
+mkdir -p ~/.gemini && cp ~/ai-config/gemini/GEMINI.md ~/.gemini/GEMINI.md
 ```
 
 **5. Codex CLI:**
 ```bash
-cp AGENTS.md ~/AGENTS.md   # global, or copy to project root
+cp ~/ai-config/codex/AGENTS.md ~/AGENTS.md   # global
+# or copy to project root for per-project
 ```
 
 **Per-project pointer (any tool):**
@@ -86,7 +103,7 @@ echo "READ ~/ai-config/AGENTS.md BEFORE ANYTHING" > AGENTS.md
 ./build.sh --symlink
 ```
 
-> `build.sh` wires `.githooks/pre-push` automatically. If `AGENTS.md` changes, the hook rebuilds aliases and blocks the push until generated files are committed.
+> `build.sh` wires `.githooks/pre-push` automatically — if `AGENTS.md` changes, the hook rebuilds all aliases and blocks the push until generated files are committed.
 
 ---
 
