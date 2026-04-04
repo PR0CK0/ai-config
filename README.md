@@ -107,34 +107,6 @@ echo "READ ~/ai-config/AGENTS.md BEFORE ANYTHING" > AGENTS.md
 
 ---
 
-## Specialist Agents
-
-Invoked by Claude Code as sub-agents. Each scoped to a domain with explicit tool grants.
-
-| Agent | Domain |
-|-------|--------|
-| `ontologist` | RDF/OWL, SHACL, SPARQL, Fuseki, Neo4j, graph databases |
-| `modeler` | JSON Schema, OpenAPI, Protobuf, Avro, LinkML, GraphQL |
-| `ml-scientist` | LLMs, RAG, embeddings, vector databases, ML pipelines |
-| `sqa-specialist` | TDD, coverage, performance profiling, test strategy |
-| `security-expert` | Threat modeling, auth, secrets, IAM, audit trails |
-| `backend-architect` | Cloud infra, Docker, Terraform, SQL/NoSQL, ECS |
-| `researcher` | Deep research, parallel sub-agents, evidence synthesis |
-| `librarian` | Docs, changelogs, API specs, release notes |
-
----
-
-## Hooks (Claude Code)
-
-| Hook | Trigger | What it does |
-|------|---------|--------------|
-| `pre-compact.js` | PreCompact | Backs up session JSONL to `~/.claude/backups/` before compaction |
-| `post-compact.js` | PostCompact | Re-injects `SESSION.md` as context after compaction |
-| `prompt-inject.js` | UserPromptSubmit | Re-injects `SESSION.md` every 20 prompts |
-| `statusline.sh` | Status line | Folder, git branch, context bar, tokens, cost, model |
-
----
-
 ## Inspiration
 
 | Source | What it contributed |
