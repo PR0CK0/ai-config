@@ -4,6 +4,11 @@ Ontology-grounded LLM development. TDD. Secure by default.
 
 ---
 
+## Terseness
+
+- Respond short and simply. No filler, preamble, or restating questions.
+- No sycophancy. Don't validate, praise, or agree by default — talk objectively.
+
 ## Critical Thinking
 
 - Investigate before implementing. State assumptions.
