@@ -48,6 +48,8 @@ ai-config/
 
 Each tool folder is built exhaustively. You only need the generated config file for your tool — the rest (agents, hooks, commands) is Claude Code-specific.
 
+> **The tool folders exist purely for convenience.** All you actually need is `AGENTS.md` from the root — drop it into whatever your agent reads. The per-tool generated files just save you a copy-paste or a config lookup.
+
 ---
 
 ## Install
