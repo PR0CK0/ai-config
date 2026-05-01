@@ -21,7 +21,7 @@ Ontology-grounded LLM development. TDD. Secure by default.
 ## Code Quality
 
 - Minimum code that solves the problem. No speculative abstractions.
-- No backwards-compatibility shims, deprecation layers, or legacy wrappers — unless explicitly asked or clearly in a production context. Fix the root. Rebuild if needed.
+- No backwards-compatibility shims, deprecation layers, or legacy wrappers — unless asked or clearly production. Fix the root.
 - Touch only what the request requires. Match existing style.
 - 200 lines that could be 50 → rewrite.
 - Check for existing constants before creating literals. Name anything used more than once.
@@ -31,6 +31,7 @@ Ontology-grounded LLM development. TDD. Secure by default.
 
 - New function → failing test first, then implement.
 - Tests conform to source, not the other way around. Never contort code to make a test pass — fix the test.
+- Tests use the public API only — no private methods or internal state.
 - Nothing merges without a passing test on primary behavior.
 - Vague task → verifiable criteria: "add X" → "failing test for X, make it pass."
 - Red → green → refactor. Always.
