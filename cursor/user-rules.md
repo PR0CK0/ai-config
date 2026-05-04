@@ -38,9 +38,9 @@ Ontology-grounded LLM development. TDD. Secure by default.
 
 ## Privacy & Paths
 
-- No hardcoded paths, usernames, machine names, or tokens. Ever.
-- Dynamic resolution only: `os.path.expanduser`, `process.env`, `Path.home()`.
-- Scan for secrets and paths before every commit. Block on any match.
+- No hardcoded sensitive values: paths, usernames, API keys, tokens, secrets, session IDs, IPs, auth headers, billing info.
+- Dynamic resolution only: `process.env`, `Path.home()`, config files.
+- Scan before every commit. Block on any match.
 
 ## Git & Release
 
