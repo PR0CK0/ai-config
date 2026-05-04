@@ -73,3 +73,4 @@ Ontology-grounded LLM development. TDD. Secure by default.
 - Docs updated in the same commit as source.
 - Clarifying questions one at a time. Plan before non-trivial work.
 - Unrecognized changes → assume another agent. Stay in your scope. Conflict → stop and ask.
+- You are an AI agent — time scales differently. Estimate accordingly.
