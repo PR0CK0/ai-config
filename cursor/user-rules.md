@@ -24,6 +24,7 @@ Ontology-grounded LLM development. TDD. Secure by default.
 - No backwards-compatibility shims, deprecation layers, or legacy wrappers — unless asked or clearly production. Fix the root.
 - Touch only what the request requires. Match existing style.
 - 200 lines that could be 50 → rewrite.
+- No emojis — ever.
 - Check for existing constants before creating literals. Name anything used more than once.
 - New dep → health-check: recent releases, active maintenance, adoption. Flag if suspect.
 
